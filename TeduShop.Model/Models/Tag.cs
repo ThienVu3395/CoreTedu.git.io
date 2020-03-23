@@ -7,18 +7,15 @@ namespace TeduShop.Model.Models
     public class Tag
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        [MaxLength(50)]
+        public string ID { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
+        [MaxLength(50)]
         public string Type { get; set; }
-
-        [ForeignKey("ID")]
-        public virtual ProductTag ProductTags { get; set; }
-
-        [ForeignKey("ID")]
-        public virtual PostTag PostTag { get; set; }
     }
 }

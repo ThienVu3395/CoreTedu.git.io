@@ -13,13 +13,16 @@ namespace TeduShop.Model.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        [MaxLength(256)]
         public string URL { get; set; }
 
-        public int DisplayOrder { get; set; }
+        public int? DisplayOrder { get; set; }
 
         [Required]
         public int GroupID { get; set; }
 
+        [MaxLength(10)]
         public string Target { get; set; }
 
         [ForeignKey("GroupID")]

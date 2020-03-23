@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -12,10 +11,14 @@ namespace TeduShop.Model.Models
         public int ProductID { get; set; }
 
         [Key]
-        public int TagID { get; set; }
+        [MaxLength(50)]
+        [Column(TypeName = "varchar")]
+        public string TagID { get; set; }
 
-        public virtual IEnumerable<Product> Product { get; set; }
+        [ForeignKey("ProductID")]
+        public virtual Product Product { get; set; }
 
-        public virtual IEnumerable<Tag> Tag { get; set; }
+        [ForeignKey("TagID")]
+        public virtual Tag Tag { get; set; }
     }
 }
