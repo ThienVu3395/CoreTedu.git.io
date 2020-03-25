@@ -1,0 +1,5 @@
+1/ Vào cửa sổ tools => package management console
+- Chọn nơi gender dữ liệu là tedu.data , và gõ các dòng lệnh sau : 
+* enable-migrations
+* add-migration tênMigration ( sẽ đc gen ra 1 folder Migrations chứa các sự thay đổi của dữ liệu )
+* update-database

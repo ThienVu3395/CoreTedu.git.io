@@ -1,0 +1,5 @@
+- Pattern Unit Of Work : đảm bảo sự toàn vẹn giữa các thao tác , ví dụ có 2 thao tác , thì 2 thao tác này phải thành
+công đã mới xử lý tiếp
+
+- Reponsitory : 1 lớp ảo hóa , nằm giữa phần truy cập dữ liệu và bussiness , giúp cho việc tối ưu câu lệnh logic . Giống
+như phần kho chứa những phần chung

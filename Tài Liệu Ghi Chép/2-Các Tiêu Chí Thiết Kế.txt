@@ -1,0 +1,37 @@
+* Theo chức năng dự án : đầy đủ các bảng các cột theo yêu cầu
+* Theo yêu cầu khách hàng : các tính năng theo yêu cầu khách hàng
+* Theo yêu cầu kỹ thuật : 
+	* Có thể SEO
+	* Có thể bật tắt dữ liệu
+	* Đảm bảo toàn vẹn
+	* Có thể truy xuất dễ dàng va tối ưu
+* Có 1 số trường hợp có thể hạ chuẩn thiết kế csdl từ chuẩn 3 xuống chuẩn 2 ,
+chuẩn 3 cần có khóa ngoại => tăng tốc độ performence lên => tùy vào dự án
+
+-------------------- MỘT SỐ KIẾN THỨC SQL SERVER 
+* Entity Framework bắt buộc phải có khóa chính mới kéo đc
+* Khóa :
+	- Khóa chính : 
+	- Khóa ngoại :
+* Indexing :
+	- Clustered Index : Chỉ có duy nhất 1 cái trong 1 bảng , giá trị là duy nhất
+		            giá trị đc sắp xếp theo kiểu vật lí 1,2,3,4,5,v.vvv.....
+	- Non Clustered Index : khóa ngoại , có thể join , sắp xếp , tìm kiếm dễ hơn
+* Kiểu dữ liệu null :
+	- Mapping sang kiểu Nullable của C#
+* Join : các lệnh join của sql server
+
+----------------------- CÁC BẢNG DỰ KIẾN + THỰC HÀNH TẠO CSDL
+- Xem trong file csdl 
+
+- Riêng 3 bảng User + Roles + User Roles k cần tạo vì khi dùng
+Identity trong .NET MVC là sẽ đc tự tạo
+
+- Các mô hình tạo csdl : 
+	* Database first : tạo csdl trước r gen ra model
+	* Code first : tạo mới viết code và migration để gen ra database
+	* Model first : tạo model trước r gen ra database
+
+*** Lưu ý : trong quá trình làm , nếu có trục trặc gì như đăng nhập vào SQL Server
+k đc , gõ tổ hợp phím WINDOWS + R => services.msc => tìm dòng nào liên quan đến
+SQL Server đang STOPPED thì bấm vào cho nó RUNNING

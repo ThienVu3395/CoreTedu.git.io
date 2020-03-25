@@ -1,0 +1,55 @@
+- Tạo ra danh sách các class tương ứng với danh sách các bảng cần tạo trong SQL SERVER ,
+tương ứng trong các class này cũng sẽ có các thuộc tính tương ứng
+
+- Sử dụng các attribute có sẵn trong namespace :
+* using system.ComponentModel.DataAnnotations;
+* using system.ComponentModel.DataAnnotations.Schema;
+
+- Sau khi migration sẽ generate ra database theo cấu trúc của các class . Đó chính là CodeFirst
+
+1 / Tedushop.Model : 
+* Tạo 1 thư mục Models : chứa các class theo cấu trúc db 
+* Tạo 1 thư mục Abstract : chứa các phần kế thừa
+* Tạo class trong thư mục Models : click chuột phải => add => new item với tên các class là số ít
+* Ở trên tên các class , chúng ta sẽ thêm thuộc tính [Table("tênBảng")] trên mỗi class , đây
+là thuộc tính của dataAnnotaions.Schema ( phải using các này ) giúp cho class này sẽ đc mapping
+với tên của Table trong CSDL ( sẽ gen ra tên bảng như thế nào )
+
+* Thuộc tính [Key] sẽ để ở trên thuộc tính nào là khóa chính , tạo cho thuộc tính này có ID tự tăng
+thì sẽ thêm 1 dòng bên dưới [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
+* [Required] để trên thuộc tính nào bắt buộc phải nhập
+
+* Thuộc tính nào có thể Null chúng ta có thể cho dấu ? ở sau kiểu dữ liệu của thuộc tính đó , ví dụ :
+public int? tênThuộcTính
+
+
+-------------------------- Tạo Khóa Ngoại
+* Tạo khóa ngoại : ( giữa 2 bảng với nhau ,  k có bảng trung gian )
+- Ví dụ chúng ta có 2 bảng Menu và MenuGroups có quan hệ với nhau qua thuộc tính GroupID ( bảng
+Menus ) và thuộc tính ID ( bảng MenuGroups )
+
+- Ở bên Class Menu.cs : Ta tạo 1 dòng public virtual MenuGroup menuGroups { get ; set ; }
+
+- Ở bên MenuGroup.cs : tạo thêm 1 dòng : public virtual IEnumerable<Menu> Menus { set ; get ; } , nhớ
+thêm các thư viện như yêu cầu ở chỗ bóng đèn
+
+---------------------- Tạo Class dùng chung ( Interface )
+* Theo như trong cấu trúc CSDL , có các thuộc tính mà bảng nào cũng có ( alias , createdDate , v..v... )
+
+* Tạo 1 class : add => new item => interFace
+
+* public interface IAuditable {
+     	DateTime CreatedDate {set;get;}
+	string CreatedBy { set ; get ; }
+	DateTime? UpdatedDate { set ; get ; }
+	string UpdatedBy { set ; get }
+	........ ( k cần khai báo kỹ như public DateTime CreatedDate {get;set;} )
+}
+
+* Class Auditable : định nghĩa bên IAuditable vào đây và đây sẽ là lớp chúng ta sẽ xài lớp này cho các
+thuộc tính chung
+
+---------------- Extension
+* CodeMaid : giúp cho chúng ta remove đi những dòng code k sử dụng ( Extension của .MVC )
+

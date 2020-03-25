@@ -1,0 +1,40 @@
+* Tạo 1 Project trống => New Project => Other Type => Blank Project
+* Sau đó vào Project click chuột phải => New Project => Add Class Library ( .NET FRAMEWORK )
+và tạo các Class với các tên như bên dưới :
+* TeduShop.Common : Chứa các lớp tiện ích dùng chung cho dự án
+* TeduShop.Model : Chứa các lớp Domain Entities của dự án
+* TeduShop.Data : Chứa tầng truy cập dữ liệu sử dụng Entity Framwork Code First
+* TeduShop.Service : Chứa các Service xử lý Business logic
+* TeduShop.Web : Project chính dùng để hiển thị giao diện và tương tác người dùng ( add => new project => MVC Web API , xong nhớ Click chuột phải vào Class này chọn SET AS STARTUP PROJECT )
+* TeduShop.UnitTest : Chứa các class Test sử dụng cho Unit Test  ( cái này phải add => test => UniTest Project )
+* Xong nhớ hết các file Class1.cs trong các Library vừa tạo bên trên
+
+Tìm hiểu thêm kiến trúc phần mềm : https://en.wikipedia.org/wiki/Software_architecture
+
+----------------------- Các Packages cần cài đặt cho từng Project ( Cài bằng NuGEt )
+* Shop.Common
+* Shop.Model :
+	- EntityFramework
+	- Microsoft.AspNet.Identity.Core
+	- Microsoft.AspNet.Identity.EntityFramework
+* Shop.Data :
+	- EntityFramework
+* Shop.Service
+* Shop.Web :
+	- Autofac, AutoMapper, EntityFramework, ....
+* Shop.UnitTest  : Moq , EntityFramework
+
+----------------------- Tạo Sự Quan Hệ Giữa các Class Trong Dự Án
+- Clich chuột phải vào REFERENCES => Add REFERENCES trong các Class
+- TeduShop.Web : chừa UnitTest
+- TeduShop.Data : chỉ vô Common
+- TeduShop.UnitTest : Full
+- TeduShop.Service : Common + Data + Model
+
+***** Lưu ý :
+- Sẽ có trường hợp chúng ta k xây dựng References đc vì phiên bản .NET FRAMEWORK của Web
+thấp hơn phiên bản .NEW FRAMEWORK của Service
+
+- Trong trường hợp tạo ra Class dư , chúng ta ngoài việc xóa trong Project , thì chúng ta phải Click chuột phải
+vào Solution chọn Open File Exploder và xóa luôn các Class dư trong đó vì trong đó vẫn còn các Class dư
+dù chúng ta đã xóa trực tiếp ở trong Project
