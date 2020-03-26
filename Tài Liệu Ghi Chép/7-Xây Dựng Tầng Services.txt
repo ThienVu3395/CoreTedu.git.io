@@ -1,0 +1,37 @@
+Nguyên Tắc SOLID :
+* Single responsibility principle : Mỗi Class chỉ nên giữ 1 trách nhiệm duy nhất
+* Open/closed principle : Open với extend và close với modify , nên extend class có sẵn,chứ k sửa code cũ
+* Liskov substitution principle : Các object của class con có thể thay thế class cha mà k làm thay đổi tính đúng đắn
+* Interface segregation principle : Tách interface lớn thành nhiều interface nhỏ
+* Dependency inversion principle : Giảm sự phụ thuộc giữa các module , module cấp cao k phụ thuộc vào module cấp
+thấp , phải cùng phụ thuộc vào abstraction
+
+- Tầng Service giúp cho chúng ta giải quyết các nghiệp vụ , tầng này sẽ có nhiệm vụ gọi tới Responsitory để giải quyết
+nghiệp vụ cho 1 component nào đó, ứng với 1 Component thì nên có 1 service và 1 responsitory để xử lý ( như class Product
+thì sẽ có ProductService và ProductResponsitory )
+
+Các Bước làm :
+- Tạo các Class trong tầng Service với hậu tố là tênClassService
+- Nguyên tắc : các phương thức đc định nghĩa ra phải đi qua Responsitory hết
+1/ Class đó phải public ra
+
+2/ Ở trên Class này phải public 1 interface ItênClassService {
+    // khai báo các phương thức cho service này trong đây , đây là bước khởi tạo bản đồ các phương thức của service này
+    Add , Update , Delete , GetAll , GetAllPaging , GetByID , GetAllPaging , SaveChanges() , vv..vvv
+}
+
+3/ Kế thừa interface trên vào tênClassService
+
+4/ Click vào bóng đèn và triển khai
+
+5/ Khởi tạo 1 constructor trong tênClassService ( gọi tới Responsitory nào ? ) : cơ chế tiêm chích này sau này sẽ đc 
+thực hiện tự động , còn giờ làm tay cho quen
+IProductReponsitory _productRepository;
+IUnitOfWord _unitOfWork;
+
+public ProductService(IProductReponsitory productRepository,IUnitOfWord unitOfWork){
+   this._productRepository = productRepository;
+   this._unitofwork = unitOfWork;
+}
+
+6/ Trong quá trình làm có gì cần sửa đổi thì vào ResponsitoryBase để sửa

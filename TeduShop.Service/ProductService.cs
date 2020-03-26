@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeduShop.Service
 {
-    public class Class1
+    class ProductService
     {
     }
 }
