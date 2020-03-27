@@ -34,4 +34,10 @@ public ProductService(IProductReponsitory productRepository,IUnitOfWord unitOfWo
    this._unitofwork = unitOfWork;
 }
 
-6/ Trong quá trình làm có gì cần sửa đổi thì vào ResponsitoryBase để sửa
+6/ Trong quá trình làm có gì cần sửa đổi thì vào IResponsitory + ResponsitoryBase để sửa
+
+* Hoàn thiện tầng Service , mỗi service sẽ ăn vào 1 bảng + 1 repository duy nhất,nên sẽ 
+có lúc gặp khó khăn trong việc triển khai các câu lệnh JOIN giữa nhiều bảng khác nhau để
+truy vấn dữ liệu
+- Giải pháp : vào repository của bảng đó tạo 1 câu lệnh và triển khai nó và gọi nó vào
+trong service tương ứng
