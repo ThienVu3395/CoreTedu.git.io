@@ -1,0 +1,126 @@
+- Tạo 1 Class Error trong Model ( ok )
+- Migration ra nó ( ok )
+- Tạo ErrorRepository 
+- Tạo ErrorService ( nhớ thêm hàm commit )
+- Vô API => PostCategoryController kế thừa ApiControllerBase trong Insfastructure => Core => ApiControllerBase
+- Vào APIControllerBase {
+private IErrorService _errorService
+public ApiControllerBase(IErrorService errorService){
+this._errorService = errorService
+}
+
+protected HttpResponseMessage CreateHtpResponse( HttpRequestMessage rqMess , Func<HttpResponseMessgae> function ){
+HttpResponseMessgae response = null;
+try{
+response = function.Invoke();
+}
+catch(DbEntityValidationException ex){
+foreach(var eve in ex.EntityValidationErrors){
+// c1
+Trace.WriteLine("Entity of type \"{0}"\ in state \"{1}\" has the following validation errors:",eve.Entry.Entity.GetType().Name,eve.Entry.State);
+
+// c2
+Trace.WriteLine($"Entity of type \"{eve.Entry.Entity.GetType().Name}"\ in state \"{eve.Entry.State}\" has the following validation errors:");
+foreach(Var ve in eve.ValidationErrors){
+Trace.WriteLine($"-Property : \"ve.ProperTyName}\",Error : \"{ve.ErrorMessage}\"");
+}
+}
+}
+catch(DbUpdateException dbEx){
+LogError(dbex);
+response = rqMess.CreateResponse(HttpStatusCode.BadRequest , dbEx.InnerExtion.Message);
+}
+catch(Exception ex){
+LogError(ex);
+response = rqMess.CreateResponse(HttpStatusCode.BadRequest , ex.Message);
+}
+}
+
+private LogError(Exception ex){
+try{
+Error error = new Error();
+error.CreatedDate = DateTime.now;
+error.Message = ex.Message;
+error.StackTrace = ex.StackTrace;
+_errorService.Create(error);
+_errorService.Save();
+}
+}
+}
+
+
+- Vào Api => PostCateGoryController
+IPostCategoryService _postCategoryService;
+
+public PostCategoryController (IErrorService errorService,IPostCategoryService postCategoryService):base(erroService){
+this._postCategoryService =  postCategoryService;
+}
+
+// Hàm Create
+public HttpResponseMessage Post(HttpRequestMessgae request,PostCategory postCategory){
+return CreateHttpResponse(requrst,()=>{
+HttpResponseMessage response = null;
+if(ModelState.IsValid){
+requesr.CreateErrorResponse(  HttpStatusCode.BadRequet,ModelState);
+}
+else {
+var category = _postCateService.Add(postCategory);
+_postCateService.Save();
+response = requesr.CreateResponse(HttpStatusCode.Created,category);
+}
+}
+}
+
+
+
+// Hàm Update
+public HttpResponseMessage Put(HttpRequestMessgae request,PostCategory postCategory){
+return CreateHttpResponse(requrst,()=>{
+HttpResponseMessage response = null;
+if(ModelState.IsValid){
+requesr.CreateErrorResponse(  HttpStatusCode.BadRequet,ModelState);
+}
+else {
+_postCateService.Update(postCategory);
+_postCateService.Save();
+response = requesr.CreateResponse(HttpStatusCode.OK);
+}
+}
+}
+
+
+
+// Hàm Delete
+public HttpResponseMessage Delete(HttpRequestMessgae request,int Id){
+return CreateHttpResponse(requrst,()=>{
+HttpResponseMessage response = null;
+if(ModelState.IsValid){
+requesr.CreateErrorResponse(  HttpStatusCode.BadRequet,ModelState);
+}
+else {
+_postCateService.Delete(Id);
+_postCateService.Save();
+response = requesr.CreateResponse(HttpStatusCode.OK);
+}
+}
+}
+
+
+
+// Hàm Select
+public HttpResponseMessage Get(HttpRequestMessgae request){
+return CreateHttpResponse(requrst,()=>{
+HttpResponseMessage response = null;
+if(ModelState.IsValid){
+requesr.CreateErrorResponse(  HttpStatusCode.BadRequet,ModelState);
+}
+else {
+var listCate = _postCateService.GetAll();
+
+response = requesr.CreateResponse(HttpStatusCode.OK,listCate);
+}
+}
+}
+
+
+- Vô Định nghĩa RoutePrefix trong đây cho mỗi route
